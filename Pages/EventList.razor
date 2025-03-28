@@ -1,0 +1,28 @@
+@page "/events"
+@inject EventService EventService
+
+<h1>EventEase - Upcoming Events</h1>
+
+@if (events == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div class="event-list">
+        @foreach (var ev in events)
+        {
+            <EventCard Event="ev" />
+            <a href="/event/@ev.Id">View Details</a>
+        }
+    </div>
+}
+
+@code {
+    private List<Event> events;
+
+    protected override void OnInitialized()
+    {
+        events = EventService.GetEvents();
+    }
+}

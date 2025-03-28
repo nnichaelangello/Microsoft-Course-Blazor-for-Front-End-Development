@@ -1,0 +1,18 @@
+<div class="event-card">
+    <h3>@Event.Title</h3>
+    <p>@Event.Description</p>
+    <p>Date: @Event.Date.ToShortDateString()</p>
+    <input type="text" @bind="Event.Title" placeholder="Edit Title" />
+    <button @onclick="SaveChanges">Save</button>
+</div>
+
+@code {
+    [Parameter]
+    public Event Event { get; set; }
+
+    private void SaveChanges()
+    {
+        // Simulasi penyimpanan perubahan
+        Console.WriteLine($"Event '{Event.Title}' updated.");
+    }
+}

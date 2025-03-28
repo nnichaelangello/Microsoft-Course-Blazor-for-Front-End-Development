@@ -1,0 +1,37 @@
+@page "/register"
+
+<h1>Register for an Event</h1>
+
+<EditForm Model="registration" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div>
+        <label>Name:</label>
+        <InputText @bind-Value="registration.Name" />
+    </div>
+    <div>
+        <label>Email:</label>
+        <InputText @bind-Value="registration.Email" />
+    </div>
+    <button type="submit">Register</button>
+</EditForm>
+
+@code {
+    private Registration registration = new();
+
+    private void HandleValidSubmit()
+    {
+        Console.WriteLine($"Registered: {registration.Name}, {registration.Email}");
+    }
+
+    public class Registration
+    {
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+    }
+}

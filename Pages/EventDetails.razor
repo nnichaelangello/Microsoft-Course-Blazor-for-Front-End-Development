@@ -1,0 +1,37 @@
+@page "/event/{Id:int}"
+@inject EventService EventService
+
+<h1>Event Details</h1>
+
+@if (currentEvent == null)
+{
+    <p>Event not found.</p>
+}
+else
+{
+    <EventCard Event="currentEvent" />
+    <p>Attendance: @(currentEvent.IsAttended ? "Yes" : "No")</p>
+    <button @onclick="ToggleAttendance">Toggle Attendance</button>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private Event currentEvent;
+
+    protected override void OnInitialized()
+    {
+        currentEvent = EventService.GetEventById(Id);
+    }
+
+    private void ToggleAttendance()
+    {
+        if (currentEvent != null)
+        {
+            currentEvent.IsAttended = !currentEvent.IsAttended;
+            EventService.MarkAttendance(Id, currentEvent.IsAttended);
+            StateHasChanged();
+        }
+    }
+}
